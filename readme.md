@@ -7,6 +7,6 @@ Run the following to get intellisense
 
 `npm install`
 
-Also supports mobile and joypads
+Also supports mobile and Xbox One Controller on PC
 
 ![alt](Images/screenshot.png)
