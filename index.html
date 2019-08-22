@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mario HTML</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rivets/0.9.6/rivets.bundled.min.js"></script>
+    <script type="text/javascript">
+        var rando = Math.floor(Math.random() * Math.floor(100000));
+        var script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js';
+        script.setAttribute("data-main", 'config.js?v=' + rando);
+        document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
+    <style>
+        body,
+        html {
+            height: 100%;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .row {
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+
+        .cardContainer {
+            background-color: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+            padding-bottom: 40px;
+        }
+
+        .lightpurple {
+            background-color: rgb(193, 188, 221);
+            -webkit-user-select: none;
+            height: 84px;
+        }
+
+        .darkpurple {
+            background-color: rgb(83, 196, 241);
+            -webkit-user-select: none;
+            height: 84px;
+        }
+
+        .topPadding {
+            padding-top: 19px;
+        }
+
+        .buttonhold {
+            background-color: lightsalmon;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        .regularTable td,
+        .regularTable th {
+            padding: 0;
+            vertical-align: top;
+            border-top: 0px;
+        }
+
+        .table td,
+        .table th {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="divLoading" class="text-center">
+        <br><br>
+        Loading...
+    </div>
+    <div id="divMain" class="text-center" style="display: none;height: 100%;background-color: rgb(246, 246, 246);">
+        <div id="header" class="mb-2">
+            <h1 class="display-4" style="font-size: 3rem;">Mario HTML</h1>
+            <!-- <h1 >Mario HTML</h1> -->
+            <!-- <button class="btn btn-primary" onclick="myApp.btnClick()">Reset Game</button>
+            <button class="btn ml-2" rv-class-btn-primary="data.isThirtyFPS" onclick="myApp.thirty()">30FPS</button>
+            <button class="btn ml-2" rv-class-btn-primary="data.isSixtyFPS" onclick="myApp.sixty()">60FPS</button> -->
+            <div class="mt-2">
+                <button class="btn btn-primary" onclick="myApp.prevLevel()">Prev Level</button>
+                <button class="btn btn-primary" onclick="myApp.nextLevel()">Next Level</button>
+            </div>
+
+        </div>
+        <canvas id="my-canvas" width="640" height="480"
+            style="display: block;margin-left: auto;margin-right: auto;"></canvas>
+
+        <!-- <div class="container mt-4">
+            <div class="card text-center" style="border-radius: 1.25rem;">
+
+            </div>
+        </div> -->
+        <div class="card-body">
+            <h5 class="card-title">Keys</h5>
+            <p class="card-text">
+                <table style="    margin-left: auto;margin-right: auto;" cellpadding="5">
+                    <tr>
+                        <td>
+                            Up, Down, Left, Right
+                        </td>
+                        <td>
+                            <span class="badge badge-secondary" style="font-size: 1rem;">Move</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            A
+                        </td>
+                        <td>
+                            <span class="badge badge-secondary" style="font-size: 1rem;">Run</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            S
+                        </td>
+                        <td>
+                            <span class="badge badge-secondary" style="font-size: 1rem;">Jump</span>
+                        </td>
+                    </tr>
+                </table>
+
+            </p>
+        </div>
+
+    </div>
+    <div id="mobileDiv" style="display: none;height: 100%;">
+        <div id="mobileCanvas">
+
+        </div>
+        <div class="text-center" style="font-size: 24px;height:100%;">
+            <table style="width: 100%;" cellpadding=0 cellspacing=0>
+                <tr>
+                    <td style="border-right: 1px solid gray;width:50%;">
+                        <div id="mobileY" class="lightpurple" rv-class-buttonhold="data.inputContoller.MobileY">
+                            <div class="topPadding">Prev Level</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="mobileX" class="lightpurple" rv-class-buttonhold="data.inputContoller.MobileX">
+                            <div class="topPadding">Next Level</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid gray;width:50%;">
+                        <div id="mobileB" class="darkpurple" rv-class-buttonhold="data.inputContoller.MobileB">
+                            <div class="topPadding">Jump</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="mobileA" class="darkpurple" rv-class-buttonhold="data.inputContoller.MobileA">
+                            <div class="topPadding">Run</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div style="color: lightgray;height:100%;" id="divTouchSurface">
+                <div style="margin-top: 40px;" id="startDiv">-TOUCH-</div>
+                <!-- { data.lblStatus } -->
+            </div>
+            <!-- <div id="menuDiv"
+                style="opacity: 0.5; background-color: rgba(243,244,244,1);width: 70px;position: absolute; top:0px;left:170px;font-size: 14px;">
+                -MENU-
+            </div> -->
+
+
+
+        </div>
+    </div>
+</body>
+
+</html>

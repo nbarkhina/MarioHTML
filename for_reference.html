@@ -1,0 +1,110 @@
+<!-- myimage.html -->
+
+
+<button class="btn btn-primary mt-4" onclick="myApp.showMessage()">Show Message</button><br>
+<div id="myMessage" class="mt-4 mb-4"></div>
+<img src="https://tse4.mm.bing.net/th?id=OIP.Xgw-Kew1L4pcqK0QQn9XWgHaKP&o=5&pid=1.7" height="200"><br>
+<img rv-src="data.imageUrl" height="200" class="mt-4 mb-4">
+
+<!-- mytable.html -->
+
+<button class="btn btn-primary mt-4" onclick="myApp.clearTable()">Add Row</button><br>
+<table class="table" id="mytable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Neil</td>
+            <td>36</td>
+        </tr>
+        <tr>
+            <td>Maddy</td>
+            <td>2</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- index.html -->
+
+<style>
+    .danger_color{
+        color:red;
+    }
+</style>
+<button class="btn btn-primary mt-4" onclick="myApp.btnLoadTable()">Load Table</button><br>
+        <button class="btn btn-primary mt-4" onclick="myApp.loadImage()">Load Image</button><br>
+        <div rv-if="data.show">
+            <span rv-class-danger_color="data.isDanger" >{ data.message }</span>
+            <br>
+            <span rv-class-danger_color="data.isDanger" rv-html="data.htmlMessage"></span>
+            <br>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <input type="text" rv-value="data.message" class="form-control">
+                    </div>
+                    <ul class="list-group mt-4">
+                        <li rv-each-name="data.names" class="list-group-item">{ name }</li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+
+        <!-- Index.ts -->
+
+        <script type="text/javascript">
+            
+        // mytable:DataTables.Api;
+        // htmlMessage:string = '<b>html message</b>';
+        // message:string = 'hello';
+        // names:string[] = ['neil','kim','maddy'];
+        // show:boolean = true;
+        // isDanger:boolean = false;
+        // imageUrl = 'https://www.premierfinancialservices.com/wp-content/uploads/2016/03/US-Route-1-toovia.com_.jpeg';
+
+
+        // showMessage(){
+        //     $("#myMessage").html('Hot Damn');
+        //     this.message = 'what a hottie';
+        //     this.isDanger = true;
+        // }
+
+        // async loadImage(){
+        //     $("#mydiv").load('myimage.html',function(){
+        //         window.myApp.bindRivets();
+        //     });
+        // }
+
+        // clearTable(){
+        //     this.mytable.row.add(['Billy',Math.floor((Math.random() * 10) + 1)]);
+        //     this.mytable.draw();
+        // }
+
+
+        // btnLoadTable() {
+
+        //     $("#mydiv").load('mytable.html',function(){
+        //         window.myApp.bindTable();
+        //         window.myApp.bindRivets();
+        //     });   
+        // }
+
+        // bindTable(){
+        //     this.mytable = $("#mytable").DataTable();     
+        // }
+        
+        </script>
+
+        
+<!-- CDN's -->
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
