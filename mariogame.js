@@ -439,10 +439,12 @@ define(["require", "exports"], function (require, exports) {
             });
         }
         log() {
-            // let referrer = document.referrer;
-            // if(referrer==null || referrer=="")
-            //     referrer = "NONE";
-            // $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&referrer=' + referrer);   
+            if (document.location.href.toLocaleLowerCase().indexOf('neilb.net') > 1) {
+                let referrer = document.referrer;
+                if (referrer == null || referrer == "")
+                    referrer = "NONE";
+                $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&referrer=' + referrer);
+            }
         }
         resetLevel() {
             for (let i = 0; i < 12; i++) {
