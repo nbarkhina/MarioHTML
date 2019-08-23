@@ -82,6 +82,33 @@
         .table th {
             padding: 5px;
         }
+        .chevron::before {
+            border-style: solid;
+            border-width: 1px 1px 0 0;
+            content: '';
+            display: inline-block;
+            height: 15px;
+        /* 	left: 10px; */
+            position: relative;
+        /* 	top: 10px; */
+            transform: rotate(-45deg);
+            vertical-align: top;
+            width: 15px;
+            position: relative;
+            top: 12px;
+        }
+
+        .chevron.right:before {
+            transform: rotate(45deg);
+        }
+
+        .chevron.bottom:before {
+            transform: rotate(135deg);
+        }
+
+        .chevron.left:before {
+            transform: rotate(-135deg);
+        }
     </style>
 </head>
 
@@ -183,13 +210,19 @@
                     </td>
                     <td>
                         <div id="mobileA" class="darkpurple" rv-class-buttonhold="data.inputContoller.MobileA">
-                            <div class="topPadding">Hold Run</div>
+                            <div class="topPadding">Run Toggle</div>
                         </div>
                     </td>
                 </tr>
             </table>
             <div style="color: lightgray;height:100%;" id="divTouchSurface">
-                <div style="padding-top: 40px;" id="startDiv">-TOUCH-</div>
+                <div style="padding-top: 40px;" id="startDiv">
+                    <span class="chevron left"></span>
+                    <span class="chevron left"></span>
+                    Swipe to Move
+                    <span class="chevron right"></span>
+                    <span class="chevron right"></span>
+                </div>
 
 
             </div>
