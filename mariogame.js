@@ -26,6 +26,7 @@ define(["require", "exports"], function (require, exports) {
     })(GameType = exports.GameType || (exports.GameType = {}));
     var GameState;
     (function (GameState) {
+        GameState[GameState["GAME_STATE_LOADING"] = 0] = "GAME_STATE_LOADING";
         GameState[GameState["GAME_STATE_INTRO"] = 1] = "GAME_STATE_INTRO";
         GameState[GameState["GAME_STATE_PLAYING"] = 2] = "GAME_STATE_PLAYING";
         GameState[GameState["GAME_STATE_PAUSED"] = 3] = "GAME_STATE_PAUSED";
@@ -243,6 +244,9 @@ define(["require", "exports"], function (require, exports) {
             this.clearScreen();
             this.updateInput();
             this.countFPS();
+            if (this.gameState == GameState.GAME_STATE_LOADING) {
+                this.loading_screen();
+            }
             if (this.gameState == GameState.GAME_STATE_INTRO) {
                 //TODO draw intro screen
             }
@@ -369,7 +373,6 @@ define(["require", "exports"], function (require, exports) {
         startGame() {
             return __awaiter(this, void 0, void 0, function* () {
                 yield this.loadLevel(1);
-                this.gameState = GameState.GAME_STATE_PLAYING;
             });
         }
         loadbitmaps() {
@@ -427,10 +430,19 @@ define(["require", "exports"], function (require, exports) {
         }
         loadLevel(level) {
             return __awaiter(this, void 0, void 0, function* () {
+                this.gameState = GameState.GAME_STATE_LOADING;
                 yield this.loadFile(level);
                 this.resetLevel();
                 this.currentLevel = level;
+                this.log();
+                this.gameState = GameState.GAME_STATE_PLAYING;
             });
+        }
+        log() {
+            let referrer = document.referrer;
+            if (referrer == null || referrer == "")
+                referrer = "NONE";
+            $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&referrer=' + referrer);
         }
         resetLevel() {
             for (let i = 0; i < 12; i++) {
@@ -562,6 +574,7 @@ define(["require", "exports"], function (require, exports) {
                     this.animationCounter = 0;
                     this.mario.curr_frame = 0;
                     this.currentLevel++;
+                    this.log();
                     this.win();
                 }
             }
@@ -1115,6 +1128,12 @@ define(["require", "exports"], function (require, exports) {
             this.dyingY = Math.floor(this.mario.y);
             this.marioY = -500;
             this.mario.y = -500;
+        }
+        loading_screen() {
+            // this.ctx.drawImage(this.winScreen, 0, 0);
+            this.ctx.font = "bold 18px Comic Sans MS";
+            this.ctx.fillStyle = "#FF0000";
+            this.ctx.fillText("Loading Level...", 260, 170);
         }
         win() {
             this.gameState = GameState.GAME_STATE_WON;

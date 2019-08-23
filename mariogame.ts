@@ -16,10 +16,11 @@ export enum GameType{
 }
 
 export enum GameState{
+    GAME_STATE_LOADING = 0,
     GAME_STATE_INTRO = 1,
     GAME_STATE_PLAYING = 2,
     GAME_STATE_PAUSED = 3,
-    GAME_STATE_WON = 4
+    GAME_STATE_WON = 4,
 }
 
 //was used for silverlight optimization
@@ -286,6 +287,11 @@ export class MarioGame{
         this.updateInput();
         this.countFPS();
 
+        if (this.gameState == GameState.GAME_STATE_LOADING)
+        {
+            this.loading_screen()
+        }
+
         if (this.gameState == GameState.GAME_STATE_INTRO)
         {
             //TODO draw intro screen
@@ -464,7 +470,6 @@ export class MarioGame{
     async startGame(){
         
         await this.loadLevel(1);
-        this.gameState = GameState.GAME_STATE_PLAYING;
     }
 
     loadbitmaps(){
@@ -545,11 +550,21 @@ export class MarioGame{
 
     async loadLevel(level:number)
     {
+        this.gameState = GameState.GAME_STATE_LOADING;
         await this.loadFile(level);
 
         this.resetLevel();
         this.currentLevel = level;
-        
+        this.log();
+        this.gameState = GameState.GAME_STATE_PLAYING;
+
+    }
+
+    log(){
+        let referrer = document.referrer;
+        if(referrer==null || referrer=="")
+            referrer = "NONE";
+        $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&referrer=' + referrer);   
     }
 
     resetLevel()
@@ -730,6 +745,7 @@ export class MarioGame{
                 this.animationCounter = 0;
                 this.mario.curr_frame = 0;
                 this.currentLevel++;
+                this.log();
                 this.win();
             }
         }
@@ -1410,6 +1426,17 @@ export class MarioGame{
         this.dyingY = Math.floor(this.mario.y);
         this.marioY = -500;
         this.mario.y = -500;
+    }
+
+    loading_screen(){
+    
+
+        // this.ctx.drawImage(this.winScreen, 0, 0);
+
+        this.ctx.font = "bold 18px Comic Sans MS";
+        this.ctx.fillStyle = "#FF0000";
+        this.ctx.fillText("Loading Level...", 260, 170);
+
     }
 
     win(){

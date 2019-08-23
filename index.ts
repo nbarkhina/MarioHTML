@@ -44,6 +44,7 @@ class MyApp{
 			$("#mobileDiv").show();
             $('#my-canvas').width(window.innerWidth);
 			$('#my-canvas').appendTo("#mobileCanvas");
+			$("body").css({"overflow":"hidden"});
 			this.inputContoller = new InputController('divTouchSurface');
 
 			document.getElementById('my-canvas').addEventListener( 'touchstart', function (e) { e.preventDefault(); }, false );

@@ -24,7 +24,7 @@
         }
 
         body {
-            overflow: hidden;
+            background-color: rgb(246, 246, 246);
         }
 
         .row {
@@ -90,9 +90,12 @@
         <br><br>
         Loading...
     </div>
-    <div id="divMain" class="text-center" style="display: none;height: 100%;background-color: rgb(246, 246, 246);">
+    <div id="divMain" class="text-center" style="display: none;height: 100%;">
         <div id="header" class="mb-2">
-            <h1 class="display-4" style="font-size: 3rem;">Mario HTML</h1>
+            <h1 class="display-4" style="font-size: 3rem;">
+                Mario HTML
+
+            </h1>
             <!-- <h1 >Mario HTML</h1> -->
             <!-- <button class="btn btn-primary" onclick="myApp.btnClick()">Reset Game</button>
             <button class="btn ml-2" rv-class-btn-primary="data.isThirtyFPS" onclick="myApp.thirty()">30FPS</button>
@@ -112,7 +115,9 @@
             </div>
         </div> -->
         <div class="card-body">
-            <h5 class="card-title">Keys</h5>
+            <h5 class="card-title">
+                Keys
+            </h5>
             <p class="card-text">
                 <table style="    margin-left: auto;margin-right: auto;" cellpadding="5">
                     <tr>
@@ -142,6 +147,13 @@
                 </table>
 
             </p>
+            <h6 class="card-title mt-4">
+                <a href="https://github.com/nbarkhina/MarioHTML" target="_blank"
+                    style="color: black;">
+                    View source on GitHub
+                    <img src="github_logo.png" style="height: 25px; padding-bottom: 5px; padding-left: 10px;">
+                </a>
+            </h6>
         </div>
 
     </div>
@@ -171,14 +183,15 @@
                     </td>
                     <td>
                         <div id="mobileA" class="darkpurple" rv-class-buttonhold="data.inputContoller.MobileA">
-                            <div class="topPadding">Run</div>
+                            <div class="topPadding">Hold Run</div>
                         </div>
                     </td>
                 </tr>
             </table>
             <div style="color: lightgray;height:100%;" id="divTouchSurface">
-                <div style="margin-top: 40px;" id="startDiv">-TOUCH-</div>
-                <!-- { data.lblStatus } -->
+                <div style="padding-top: 40px;" id="startDiv">-TOUCH-</div>
+
+
             </div>
             <!-- <div id="menuDiv"
                 style="opacity: 0.5; background-color: rgba(243,244,244,1);width: 70px;position: absolute; top:0px;left:170px;font-size: 14px;">

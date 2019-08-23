@@ -21,6 +21,7 @@ define(["require", "exports", "./mariogame", "./input_controller", "./fps_contro
                 $("#mobileDiv").show();
                 $('#my-canvas').width(window.innerWidth);
                 $('#my-canvas').appendTo("#mobileCanvas");
+                $("body").css({ "overflow": "hidden" });
                 this.inputContoller = new input_controller_1.InputController('divTouchSurface');
                 document.getElementById('my-canvas').addEventListener('touchstart', function (e) { e.preventDefault(); }, false);
                 document.getElementById('my-canvas').addEventListener('touchend', function (e) { e.preventDefault(); }, false);
