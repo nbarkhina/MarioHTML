@@ -3,9 +3,15 @@ View demo here
 
 https://www.neilb.net/MarioHTML/
 
-Run the following to get intellisense
+To Build the project first install TypeScript and the dependencies
+
+`npm install -g typescript`
 
 `npm install`
+
+Then run the TSC Compiler to build the JavaScript Files
+
+`tsc`
 
 Also supports mobile and Xbox One Controller on PC
 
