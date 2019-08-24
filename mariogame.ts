@@ -23,14 +23,6 @@ export enum GameState{
     GAME_STATE_WON = 4,
 }
 
-//was used for silverlight optimization
-// export class WorldImage
-// {
-//     worldImage:HTMLImageElement;
-//     x:number;
-//     y:number;
-//     obj:SpecialObject;
-// }
 
 export class Animator
 {
@@ -51,8 +43,6 @@ export class Animator
 
     LoadFrame(filename:string)
     {
-        // BitmapImage bitmapimg = new BitmapImage(new Uri(filename, UriKind.Relative));
-        // frames.Add(bitmapimg);
         let frame = new Image();
         frame.src = filename;
         this.frames.push(frame);
@@ -175,7 +165,6 @@ export class MarioGame{
     platformTurnaroundFrames = 60;
     winScreen = new Image();
 
-
     mario:Animator;
     bigMario:Animator;
     tiles:Animator;
@@ -196,7 +185,6 @@ export class MarioGame{
     jumpkey = false;
     leftkey = false;
     rightkey = false;
-
     isSixtyFPSmode = false;
     
     constructor(screenWidth:number,screenHeight:number,ctx:CanvasRenderingContext2D,inputController:InputController,
@@ -233,20 +221,6 @@ export class MarioGame{
     }
 
     clearScreen(){
-
-        //silverlight colors
-        // if (!blue)
-        // {
-        //     stop1.Color = getColorFromHexString("FFF0EAE6");
-        //     stop2.Color = getColorFromHexString("FFE67B24");
-        // }
-        // else
-        // {
-        //     stop1.Color = getColorFromHexString("FFCAE7F2");
-        //     stop2.Color = getColorFromHexString("FF24B2E6");
-        // }
-
-
 
         let gradient_mode = true;
 
@@ -316,21 +290,6 @@ export class MarioGame{
     }
 
 
-    // draw(){
-
-        //render speed test
-        // for (let i = 0; i < 12; i++)
-        // {
-        //     for (let j = 0; j < 16; j++)
-        //     {
-        //         this.ctx.drawImage(this.sampleImage, this.sampleX + (40*j), this.sampleY  + (40*i));
-        //     }
-        // }
-        // this.ctx.drawImage(this.sampleImage, this.sampleX, this.sampleY);
-        // this.ctx.drawImage(this.goomba.frames[0], this.sampleX + 100, this.sampleY + 100);
-
-    // }
-
     lastCalledTime = new Date();
     fpscounter = 0;
     currentfps = 0;
@@ -354,104 +313,42 @@ export class MarioGame{
         this.ctx.fillStyle = "#FF0000";
         this.ctx.fillText("Level: " + this.currentLevel.toString(), 60, 25);
         this.ctx.fillText("FPS: " + this.currentfps.toString(), 160, 25);
-        // this.ctx.fillText("FPS: ", 50, 25);
-        // this.ctx.fillStyle = "#8888FF";
-        // this.ctx.fillText(this.currentfps.toString(), 100, 25);
-        // this.ctx.fillStyle = "#0000FF";
-        // this.ctx.fillText("Level: ", 150, 25);
-        // this.ctx.fillStyle = "#8888FF";
-        // this.ctx.fillText(this.currentLevel.toString(), 210, 25);
-        /*
-        if (gameState == GAME_STATE_PLAYING)
-        {
-            STATS.Text = "LIVES: " + lives + "   COINS: " + coins;
-            if (!levelLoadedFromFile)
-            STATS.Text += "   LEVEL: " + currentLevel;
-        }
-        else if (gameState == GAME_STATE_PAUSED)
-        {
-            STATS.Text = "PAUSED";
-        }
-        else
-            STATS.Text = "";
-        */
+
     }
 
 
     updateInput(){
         this.inputContoller.update();
 
+        if (this.inputContoller.Key_Action_1==false)
+            this.runkey = false;
 
-        // if (this.isMobile)
-        // {
-        //     if (this.inputContoller.Key_Right_Long)
-        //         this.runkey = true;
-        //     if (this.inputContoller.Key_Right==true)
-        //     {
-        //         if (this.leftkey)
-        //         {
-        //             this.leftkey = false;
-        //             this.runkey = false;
-        //         }
-        //         this.rightkey = true;
-        //     }
-        //     if (this.inputContoller.Key_Left)
-        //     {
-        //         if (this.rightkey)
-        //         {
-        //             this.rightkey = false;
-        //             this.runkey = false;
-        //         }
-        //         this.rightkey = false;
-        //         this.leftkey = true;
-        //     }
-        //     if (this.inputContoller.Touch_Start)
-        //     {
-        //         this.jumpkey = true;
-        //     }
-        //     if (this.inputContoller.Touch_End)
-        //     {
-        //         this.jumpkey = false;
-        //     }
-                
-        // }
-        // else
-        {
-            if (this.inputContoller.Key_Action_1==false)
-                this.runkey = false;
+        if (this.inputContoller.Key_Action_2==false)
+            this.jumpkey = false;
 
-            if (this.inputContoller.Key_Action_2==false)
-                this.jumpkey = false;
+        if (this.inputContoller.Key_Left==false)
+            this.leftkey = false;
 
-            if (this.inputContoller.Key_Left==false)
-                this.leftkey = false;
+        if (this.inputContoller.Key_Right==false)
+            this.rightkey = false;
 
-            if (this.inputContoller.Key_Right==false)
-                this.rightkey = false;
+        if (this.inputContoller.Key_Action_1==true)
+            this.runkey = true;
 
-            if (this.inputContoller.Key_Action_1==true)
-                this.runkey = true;
+        if (this.inputContoller.Key_Action_2==true)
+            this.jumpkey = true;
 
-            if (this.inputContoller.Key_Action_2==true)
-                this.jumpkey = true;
+        if (this.inputContoller.Key_Left==true)
+            this.leftkey = true;
 
-            if (this.inputContoller.Key_Left==true)
-                this.leftkey = true;
-
-            if (this.inputContoller.Key_Right==true)
-                this.rightkey = true;
-        }
+        if (this.inputContoller.Key_Right==true)
+            this.rightkey = true;
         
     }
 
     initgame()
     {
         this.specialCharacters = [];
-        // for(let i = 0;i<10000;i++)
-        // {
-        //     let special = new SpecialObject();
-        //     this.specialCharacters.push(special);
-        // }
         this.grid = [];
         for (let i = 0; i < 12; i++)
         {
@@ -460,8 +357,6 @@ export class MarioGame{
         }
         this.tempgrid = [];
         this.loadbitmaps();
-
-        //i added this in HTML version
         this.startGame();
 
     }
@@ -566,7 +461,7 @@ export class MarioGame{
             let referrer = document.referrer;
             if(referrer==null || referrer=="")
                 referrer = "NONE";
-            $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&referrer=' + referrer);   
+            $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&fps=' + this.currentfps + '&referrer=' + referrer);   
         }
     }
 
@@ -574,10 +469,7 @@ export class MarioGame{
     {
         for (let i = 0; i < 12; i++)
         {
-            // for (let j = 0; j < this.grid[i].length; j++)
-            // {
-                this.grid[i] = [];
-            // }
+            this.grid[i] = [];
         }
 
         for (let i = 0; i < 12; i++)
@@ -662,8 +554,6 @@ export class MarioGame{
             this.MARIO_MOVE_X();	    //adjust mario's horizontal motion
             this.MARIO_MOVE_Y();	    //adjust mario's vertical motion
         }
-
-        //TODO remove specialSize variable and just manage from array length
 
         //run scripts for all objects
         for (let i = 0; i < this.specialCharacters.length; i++)
@@ -1412,12 +1302,6 @@ export class MarioGame{
 
                 //GAME OVER
 
-                // lblGameOver.Visibility = Visibility.Visible;
-                // GameOverAnimation.AutoReverse = true;
-                // GameOverAnimation.RepeatBehavior = RepeatBehavior.Forever;
-                // GameOverAnimation.Begin();
-                // storySubmit.Begin();
-                // txtHighScore1.Focus();
             }
         }
     }
@@ -1433,9 +1317,6 @@ export class MarioGame{
 
     loading_screen(){
     
-
-        // this.ctx.drawImage(this.winScreen, 0, 0);
-
         this.ctx.font = "bold 18px Comic Sans MS";
         this.ctx.fillStyle = "#FF0000";
         this.ctx.fillText("Loading Level...", 260, 170);
@@ -1500,12 +1381,10 @@ export class MarioGame{
                 }
                 if (obj2.state == 2)
                 {
-                    //sprintf(buffer3,"direction = %d",direction);
                     if (direction == 7 || direction == 8)
                     {
                         this.flying = 0;
                         this.jumpCounter = 0;
-                        //ySpeed = obj2.velocity;
                         this.marioY = obj2.y - this.height + obj2.velocity;
                     }
                 }
