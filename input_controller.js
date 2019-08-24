@@ -55,6 +55,7 @@ define(["require", "exports"], function (require, exports) {
             this.MobileX_Counter = 0;
             this.MobileY = false;
             this.MobileY_Counter = 0;
+            this.quickTurnaroundEnabled = true;
             this.touch_tap_counter = 0;
             this.touch_start_counter = 0;
             this.touch_end_counter = 0;
@@ -330,6 +331,8 @@ define(["require", "exports"], function (require, exports) {
                 if (touch.target["id"] == "divTouchSurface" || touch.target["id"] == "startDiv") {
                     input_controller.touchX_Start = touch.clientX;
                     input_controller.touchY_Start = touch.clientY;
+                    input_controller.touchXLast = touch.clientX;
+                    input_controller.touchYLast = touch.clientY;
                 }
             }
         }
@@ -342,15 +345,44 @@ define(["require", "exports"], function (require, exports) {
                 if (touch.target["id"] == "divTouchSurface" || touch.target["id"] == "startDiv") {
                     var amount_horizontal = touch.clientX - input_controller.touchX_Start;
                     var amount_vertical = touch.clientY - input_controller.touchY_Start;
+                    //handle sudden change in touch direction
+                    if (input_controller.quickTurnaroundEnabled) {
+                        if (input_controller.Key_Right) {
+                            if (touch.clientX > input_controller.touchXLast) {
+                                input_controller.touchXLast = touch.clientX;
+                            }
+                            else {
+                                if (touch.clientX < input_controller.touchXLast - 5) {
+                                    input_controller.touchX_Start = touch.clientX - 10;
+                                }
+                            }
+                        }
+                        if (input_controller.Key_Left) {
+                            if (touch.clientX < input_controller.touchXLast) {
+                                input_controller.touchXLast = touch.clientX;
+                            }
+                            else {
+                                if (touch.clientX > input_controller.touchXLast + 5) {
+                                    input_controller.touchX_Start = touch.clientX + 10;
+                                }
+                            }
+                        }
+                    }
                     if (amount_horizontal > 10) {
                         if (!input_controller.Key_Right) {
                             input_controller.Key_Right = true;
+                            input_controller.Key_Left = false;
                         }
                     }
                     if (amount_horizontal < -10) {
                         if (!input_controller.Key_Left) {
                             input_controller.Key_Left = true;
+                            input_controller.Key_Right = false;
                         }
+                    }
+                    if (Math.abs(amount_horizontal) <= 10) {
+                        input_controller.Key_Left = false;
+                        input_controller.Key_Right = false;
                     }
                     if (amount_vertical > 10) {
                         if (!input_controller.Key_Down) {
