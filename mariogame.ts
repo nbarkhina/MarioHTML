@@ -455,16 +455,6 @@ export class MarioGame{
 
     }
 
-    log(){
-        if (document.location.href.toLocaleLowerCase().indexOf('neilb.net')>1)
-        {
-            let referrer = document.referrer;
-            if(referrer==null || referrer=="")
-                referrer = "NONE";
-            $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&fps=' + this.currentfps + '&referrer=' + referrer);   
-        }
-    }
-
     resetLevel()
     {
         for (let i = 0; i < 12; i++)
@@ -537,6 +527,17 @@ export class MarioGame{
                 arr1.push(line.charAt(j));
             this.tempgrid.push(arr1);
             this.worldWidth = line.length;
+        }
+    }
+
+    async log(){
+        if (document.location.href.toLocaleLowerCase().indexOf('neilb.net')>1)
+        {
+            await new Promise<void>(resolve => {setTimeout(resolve, 2000); });
+            let referrer = document.referrer;
+            if(referrer==null || referrer=="")
+                referrer = "NONE";
+            $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&fps=' + this.currentfps + '&referrer=' + referrer);   
         }
     }
 
