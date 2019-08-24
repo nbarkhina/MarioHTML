@@ -376,7 +376,7 @@ export class InputController {
 
     touchXLast:number;
     touchYLast:number;
-    quickTurnaroundEnabled:boolean = true;
+    quickTurnaroundEnabled:boolean = false;
 
     touchMove(event: TouchEvent) {
         event.preventDefault();

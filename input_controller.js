@@ -55,7 +55,7 @@ define(["require", "exports"], function (require, exports) {
             this.MobileX_Counter = 0;
             this.MobileY = false;
             this.MobileY_Counter = 0;
-            this.quickTurnaroundEnabled = true;
+            this.quickTurnaroundEnabled = false;
             this.touch_tap_counter = 0;
             this.touch_start_counter = 0;
             this.touch_end_counter = 0;
