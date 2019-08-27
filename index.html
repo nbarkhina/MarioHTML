@@ -124,24 +124,18 @@
                 Mario HTML
 
             </h1>
-            <!-- <h1 >Mario HTML</h1> -->
-            <!-- <button class="btn btn-primary" onclick="myApp.btnClick()">Reset Game</button>
-            <button class="btn ml-2" rv-class-btn-primary="data.isThirtyFPS" onclick="myApp.thirty()">30FPS</button>
-            <button class="btn ml-2" rv-class-btn-primary="data.isSixtyFPS" onclick="myApp.sixty()">60FPS</button> -->
             <div class="mt-2">
-                <button class="btn btn-primary" onclick="myApp.prevLevel()">Prev Level</button>
-                <button class="btn btn-primary" onclick="myApp.nextLevel()">Next Level</button>
+                <!-- <button class="btn btn-primary" onclick="myApp.prevLevel()">Prev Level</button>
+                <button class="btn btn-primary" onclick="myApp.nextLevel()">Next Level</button> -->
+                <!-- USED DIVS INSTEAD OF BUTTONS SO SPACE KEY DOESN'T TRIGGER ACCIDENTALLY -->
+                <div class="btn btn-primary" onclick="myApp.prevLevel()">Prev Level</div>
+                <div class="btn btn-primary" onclick="myApp.nextLevel()">Next Level</div>
             </div>
 
         </div>
         <canvas id="my-canvas" width="640" height="480"
             style="display: block;margin-left: auto;margin-right: auto;"></canvas>
 
-        <!-- <div class="container mt-4">
-            <div class="card text-center" style="border-radius: 1.25rem;">
-
-            </div>
-        </div> -->
         <div class="card-body">
             <h5 class="card-title">
                 Keys
@@ -158,18 +152,18 @@
                     </tr>
                     <tr>
                         <td>
-                            A
-                        </td>
-                        <td>
-                            <span class="badge badge-secondary" style="font-size: 1rem;">Run</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             S
                         </td>
                         <td>
                             <span class="badge badge-secondary" style="font-size: 1rem;">Jump</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            A
+                        </td>
+                        <td>
+                            <span class="badge badge-secondary" style="font-size: 1rem;">Run</span>
                         </td>
                     </tr>
                 </table>
@@ -218,20 +212,11 @@
             </table>
             <div style="color: lightgray;height:100%;" id="divTouchSurface">
                 <div style="padding-top: 40px;" id="startDiv">
-                    <!-- <span class="chevron left"></span> -->
-                    <!-- <span class="chevron left"></span> -->
                     << Swipe to Move >>
-                    <!-- <span class="chevron right"></span> -->
-                    <!-- <span class="chevron right"></span> -->
                 </div>
 
 
             </div>
-            <!-- <div id="menuDiv"
-                style="opacity: 0.5; background-color: rgba(243,244,244,1);width: 70px;position: absolute; top:0px;left:170px;font-size: 14px;">
-                -MENU-
-            </div> -->
-
 
 
         </div>

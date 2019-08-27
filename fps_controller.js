@@ -4,9 +4,13 @@ define(["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     class FPSController {
         constructor(target_fps) {
+            this.enabled = false;
             this.fpsInterval = 1000 / target_fps;
             this.then = Date.now();
             this.startTime = this.then;
+        }
+        UpdateTargetFPS(target_fps) {
+            this.fpsInterval = 1000 / target_fps;
         }
         IsFrameReady() {
             this.now = Date.now();

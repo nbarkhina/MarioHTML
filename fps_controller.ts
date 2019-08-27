@@ -7,11 +7,17 @@ export class FPSController{
 	now:number;
 	then:number;
     elapsed:number;
+	enabled:boolean = false;
     
     constructor(target_fps:number){
 		this.fpsInterval = 1000 / target_fps;
 		this.then = Date.now();
 		this.startTime = this.then;
+    }
+
+    UpdateTargetFPS(target_fps:number)
+    {
+		this.fpsInterval = 1000 / target_fps;
     }
 
     IsFrameReady():boolean{

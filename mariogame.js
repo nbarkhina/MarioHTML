@@ -157,6 +157,7 @@ define(["require", "exports"], function (require, exports) {
             this.leftkey = false;
             this.rightkey = false;
             this.isSixtyFPSmode = false;
+            this.firstTimeFpsCheck = true;
             this.lastCalledTime = new Date();
             this.fpscounter = 0;
             this.currentfps = 0;
@@ -400,13 +401,35 @@ define(["require", "exports"], function (require, exports) {
         }
         log() {
             return __awaiter(this, void 0, void 0, function* () {
+                //add a slight delay to allow animation loop to settle
+                yield new Promise(resolve => { setTimeout(resolve, 2000); });
+                //do we need to enable frame skipping?
+                if (this.firstTimeFpsCheck) {
+                    this.determineIfFrameSkippingEnabled();
+                }
                 if (document.location.href.toLocaleLowerCase().indexOf('neilb.net') > 1) {
-                    yield new Promise(resolve => { setTimeout(resolve, 2000); });
                     let referrer = document.referrer;
                     if (referrer == null || referrer == "")
                         referrer = "NONE";
                     $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&fps=' + this.currentfps + '&referrer=' + referrer);
                 }
+            });
+        }
+        //fix for high refresh monitors making the game run too fast
+        //only determine this when the game first loads to avoid
+        //random dips and spikes from triggering frame skipping
+        determineIfFrameSkippingEnabled() {
+            return __awaiter(this, void 0, void 0, function* () {
+                if (this.isSixtyFPSmode == true) {
+                    if (this.currentfps > 70) {
+                        let fpsController = window["myApp"].fpsController;
+                        fpsController.UpdateTargetFPS(60);
+                        fpsController.enabled = true;
+                        console.log('frame skipping enabled');
+                    }
+                }
+                //TODO move this functionality into the FPS Controller class
+                this.firstTimeFpsCheck = false;
             });
         }
         gameMain() {

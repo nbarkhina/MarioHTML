@@ -5,7 +5,6 @@ define(["require", "exports", "./mariogame", "./input_controller", "./fps_contro
         constructor() {
             this.mobileMode = false;
             this.isSixtyFPS = true;
-            this.isThirtyFPS = false;
             this.useragent = '';
             rivets.bind(document.getElementsByTagName('body')[0], { data: this });
             this.canvas = document.getElementById('my-canvas');
@@ -30,6 +29,7 @@ define(["require", "exports", "./mariogame", "./input_controller", "./fps_contro
             else {
                 this.inputContoller = new input_controller_1.InputController('divMain');
                 //MS Edge doesn't work well with wasd keys, misses some key up events
+                //also spacebar key made ux scroll sometimes so using a and s instead
                 this.inputContoller.KeyMappings = {
                     Mapping_Left: 'Left',
                     Mapping_Right: 'Right',
@@ -50,21 +50,25 @@ define(["require", "exports", "./mariogame", "./input_controller", "./fps_contro
             }
             this.ctx = this.canvas.getContext('2d');
             this.createGame();
-            this.fpsController = new fps_controller_1.FPSController(30);
+            this.fpsController = new fps_controller_1.FPSController(60);
             $('#divLoading').hide();
             window.requestAnimationFrame(this.draw.bind(this));
         }
         createGame() {
             this.marioGame = new mariogame_1.MarioGame(this.canvas.width, this.canvas.height, this.ctx, this.inputContoller, this.mobileMode, this.isSixtyFPS);
         }
+        //30 FPS mode to experience the game as originally designed
         thirty() {
             this.isSixtyFPS = false;
-            this.isThirtyFPS = true;
+            this.fpsController.UpdateTargetFPS(30);
+            this.fpsController.enabled = true;
             this.createGame();
         }
+        //switch back to 60 FPS mode which is the default
         sixty() {
             this.isSixtyFPS = true;
-            this.isThirtyFPS = false;
+            this.fpsController.UpdateTargetFPS(60);
+            this.fpsController.enabled = false;
             this.createGame();
         }
         prevLevel() {
@@ -82,9 +86,10 @@ define(["require", "exports", "./mariogame", "./input_controller", "./fps_contro
             this.marioGame.draw();
         }
         draw() {
-            if (this.isSixtyFPS)
+            if (this.fpsController.enabled == false) //not using frame skipping - draw as fast as screen allows
                 this.drawGame();
-            else if (this.fpsController.IsFrameReady()) {
+            else if (this.fpsController.IsFrameReady()) //use frame skipping for either high refresh or for 30FPS mode
+             {
                 this.drawGame();
             }
             window.requestAnimationFrame(this.draw.bind(this));

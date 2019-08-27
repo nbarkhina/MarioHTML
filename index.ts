@@ -12,7 +12,6 @@ class MyApp{
 	inputContoller:InputController;
 	mobileMode = false;
 	isSixtyFPS = true;
-	isThirtyFPS = false;
 	fpsController:FPSController;
 	useragent:string = '';
 
@@ -30,13 +29,6 @@ class MyApp{
 		{
 			this.mobileMode = true;
 		}
-
-
-		
-		
-
-		
-
 
 		if (this.mobileMode)
 		{
@@ -57,6 +49,7 @@ class MyApp{
 			this.inputContoller = new InputController('divMain');
 
 			//MS Edge doesn't work well with wasd keys, misses some key up events
+			//also spacebar key made ux scroll sometimes so using a and s instead
 			this.inputContoller.KeyMappings = {
 				Mapping_Left:'Left',
 				Mapping_Right:'Right',
@@ -78,7 +71,7 @@ class MyApp{
 
 		this.ctx = this.canvas.getContext('2d');
 		this.createGame();
-		this.fpsController = new FPSController(30);
+		this.fpsController = new FPSController(60);
 
 		$('#divLoading').hide();
 
@@ -91,15 +84,19 @@ class MyApp{
 			this.inputContoller,this.mobileMode, this.isSixtyFPS);
 	}
 
+	//30 FPS mode to experience the game as originally designed
 	thirty(){
 		this.isSixtyFPS = false;
-		this.isThirtyFPS = true;
+		this.fpsController.UpdateTargetFPS(30);
+		this.fpsController.enabled = true;
 		this.createGame();
 	}
 	
+	//switch back to 60 FPS mode which is the default
 	sixty(){
 		this.isSixtyFPS = true;
-		this.isThirtyFPS = false;
+		this.fpsController.UpdateTargetFPS(60);
+		this.fpsController.enabled = false;
 		this.createGame();
 	}
 
@@ -124,9 +121,10 @@ class MyApp{
 
 	draw(){
 		
-		if (this.isSixtyFPS)
+		if (this.fpsController.enabled==false) //not using frame skipping - draw as fast as screen allows
 			this.drawGame();
-		else if (this.fpsController.IsFrameReady()) {
+		else if (this.fpsController.IsFrameReady()) //use frame skipping for either high refresh or for 30FPS mode
+		{
 			this.drawGame();
 		}
 

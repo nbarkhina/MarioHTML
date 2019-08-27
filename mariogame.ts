@@ -1,4 +1,5 @@
 import { InputController } from "./input_controller";
+import { FPSController } from "./fps_controller";
 
 export enum GameType{
     MARIO = 0,
@@ -186,6 +187,7 @@ export class MarioGame{
     leftkey = false;
     rightkey = false;
     isSixtyFPSmode = false;
+    firstTimeFpsCheck:boolean = true;
     
     constructor(screenWidth:number,screenHeight:number,ctx:CanvasRenderingContext2D,inputController:InputController,
         isMobile:boolean,isSixtyFPSmode:boolean){
@@ -531,14 +533,45 @@ export class MarioGame{
     }
 
     async log(){
+
+        //add a slight delay to allow animation loop to settle
+        await new Promise<void>(resolve => { setTimeout(resolve, 2000); });
+
+        //do we need to enable frame skipping?
+        if (this.firstTimeFpsCheck)
+        {
+            this.determineIfFrameSkippingEnabled();
+        }
+
         if (document.location.href.toLocaleLowerCase().indexOf('neilb.net')>1)
         {
-            await new Promise<void>(resolve => {setTimeout(resolve, 2000); });
             let referrer = document.referrer;
             if(referrer==null || referrer=="")
                 referrer = "NONE";
             $.get('https://neilb.net/tetrisjsbackend/api/stuff/addmarioscore?level=' + this.currentLevel + '&lives=' + this.lives + '&fps=' + this.currentfps + '&referrer=' + referrer);   
         }
+
+
+    }
+
+    //fix for high refresh monitors making the game run too fast
+    //only determine this when the game first loads to avoid
+    //random dips and spikes from triggering frame skipping
+    async determineIfFrameSkippingEnabled(){
+
+        if(this.isSixtyFPSmode==true)
+        {
+            if (this.currentfps>70)
+            {
+                let fpsController = window["myApp"].fpsController as FPSController;
+                fpsController.UpdateTargetFPS(60);
+                fpsController.enabled = true;
+                console.log('frame skipping enabled');
+            }
+        }
+
+        //TODO move this functionality into the FPS Controller class
+        this.firstTimeFpsCheck = false;
     }
 
     gameMain(){
