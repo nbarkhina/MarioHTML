@@ -8,8 +8,8 @@ class MyApp{
 
 	ctx:CanvasRenderingContext2D;
 	canvas:HTMLCanvasElement;
-    marioGame:MarioGame;
-	inputContoller:InputController;
+	marioGame:MarioGame;
+	inputController:InputController;
 	mobileMode = false;
 	isSixtyFPS = true;
 	fpsController:FPSController;
@@ -37,7 +37,7 @@ class MyApp{
             $('#my-canvas').width(window.innerWidth);
 			$('#my-canvas').appendTo("#mobileCanvas");
 			$("body").css({"overflow":"hidden"});
-			this.inputContoller = new InputController('divTouchSurface');
+			this.inputController = new InputController('divTouchSurface');
 
 			document.getElementById('my-canvas').addEventListener( 'touchstart', function (e) { e.preventDefault(); }, false );
             document.getElementById('my-canvas').addEventListener( 'touchend', function (e) { e.preventDefault(); }, false );
@@ -46,11 +46,11 @@ class MyApp{
 		}
 		else
 		{
-			this.inputContoller = new InputController('divMain');
+			this.inputController = new InputController('divMain');
 
 			//MS Edge doesn't work well with wasd keys, misses some key up events
 			//also spacebar key made ux scroll sometimes so using a and s instead
-			this.inputContoller.KeyMappings = {
+			this.inputController.KeyMappings = {
 				Mapping_Left:'Left',
 				Mapping_Right:'Right',
 				Mapping_Up:'Up',
@@ -64,8 +64,8 @@ class MyApp{
 				Mapping_Joy_L: ',',
 				Mapping_Joy_R: '.'
 			};
-			this.inputContoller.setupGamePad();
-			// this.inputContoller.Gamepad_Process_Axis = true;
+			this.inputController.setupGamePad();
+			// this.inputController.Gamepad_Process_Axis = true;
 			$('#divMain').show();
 		}
 
@@ -81,7 +81,7 @@ class MyApp{
 
 	createGame(){
 		this.marioGame = new MarioGame(this.canvas.width, this.canvas.height,this.ctx,
-			this.inputContoller,this.mobileMode, this.isSixtyFPS);
+			this.inputController, this.mobileMode, this.isSixtyFPS);
 	}
 
 	//30 FPS mode to experience the game as originally designed

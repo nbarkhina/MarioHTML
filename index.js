@@ -21,16 +21,16 @@ define(["require", "exports", "./mariogame", "./input_controller", "./fps_contro
                 $('#my-canvas').width(window.innerWidth);
                 $('#my-canvas').appendTo("#mobileCanvas");
                 $("body").css({ "overflow": "hidden" });
-                this.inputContoller = new input_controller_1.InputController('divTouchSurface');
+                this.inputController = new input_controller_1.InputController('divTouchSurface');
                 document.getElementById('my-canvas').addEventListener('touchstart', function (e) { e.preventDefault(); }, false);
                 document.getElementById('my-canvas').addEventListener('touchend', function (e) { e.preventDefault(); }, false);
                 document.getElementById('my-canvas').addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
             }
             else {
-                this.inputContoller = new input_controller_1.InputController('divMain');
+                this.inputController = new input_controller_1.InputController('divMain');
                 //MS Edge doesn't work well with wasd keys, misses some key up events
                 //also spacebar key made ux scroll sometimes so using a and s instead
-                this.inputContoller.KeyMappings = {
+                this.inputController.KeyMappings = {
                     Mapping_Left: 'Left',
                     Mapping_Right: 'Right',
                     Mapping_Up: 'Up',
@@ -44,8 +44,8 @@ define(["require", "exports", "./mariogame", "./input_controller", "./fps_contro
                     Mapping_Joy_L: ',',
                     Mapping_Joy_R: '.'
                 };
-                this.inputContoller.setupGamePad();
-                // this.inputContoller.Gamepad_Process_Axis = true;
+                this.inputController.setupGamePad();
+                // this.inputController.Gamepad_Process_Axis = true;
                 $('#divMain').show();
             }
             this.ctx = this.canvas.getContext('2d');
@@ -55,7 +55,7 @@ define(["require", "exports", "./mariogame", "./input_controller", "./fps_contro
             window.requestAnimationFrame(this.draw.bind(this));
         }
         createGame() {
-            this.marioGame = new mariogame_1.MarioGame(this.canvas.width, this.canvas.height, this.ctx, this.inputContoller, this.mobileMode, this.isSixtyFPS);
+            this.marioGame = new mariogame_1.MarioGame(this.canvas.width, this.canvas.height, this.ctx, this.inputController, this.mobileMode, this.isSixtyFPS);
         }
         //30 FPS mode to experience the game as originally designed
         thirty() {
