@@ -103,7 +103,7 @@ export class MarioGame{
     sampleImage = new Image();
     sampleX = 100;
     sampleY = 100;
-    inputContoller:InputController;
+    inputController:InputController;
     isMobile:boolean = false;
 
     //world
@@ -195,7 +195,7 @@ export class MarioGame{
         this.screenHeight = screenHeight;
         this.ctx = ctx;
         this.sampleImage.src = "Images/mario1.png";
-        this.inputContoller = inputController;
+        this.inputController = inputController;
         this.isMobile = isMobile;
 
         //adjust physics from 30FPS to 60FPS
@@ -320,30 +320,30 @@ export class MarioGame{
 
 
     updateInput(){
-        this.inputContoller.update();
+        this.inputController.update();
 
-        if (this.inputContoller.Key_Action_1==false)
+        if (this.inputController.Key_Action_1==false)
             this.runkey = false;
 
-        if (this.inputContoller.Key_Action_2==false)
+        if (this.inputController.Key_Action_2==false)
             this.jumpkey = false;
 
-        if (this.inputContoller.Key_Left==false)
+        if (this.inputController.Key_Left==false)
             this.leftkey = false;
 
-        if (this.inputContoller.Key_Right==false)
+        if (this.inputController.Key_Right==false)
             this.rightkey = false;
 
-        if (this.inputContoller.Key_Action_1==true)
+        if (this.inputController.Key_Action_1==true)
             this.runkey = true;
 
-        if (this.inputContoller.Key_Action_2==true)
+        if (this.inputController.Key_Action_2==true)
             this.jumpkey = true;
 
-        if (this.inputContoller.Key_Left==true)
+        if (this.inputController.Key_Left==true)
             this.leftkey = true;
 
-        if (this.inputContoller.Key_Right==true)
+        if (this.inputController.Key_Right==true)
             this.rightkey = true;
         
     }
