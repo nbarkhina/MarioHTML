@@ -514,7 +514,8 @@ export class MarioGame{
     async loadFile(level:number)
     { 
 
-        let filename = 'Levels/level' + level + '.txt';
+        var rando = Math.floor(Math.random() * Math.floor(100000));
+        let filename = 'Levels/level' + level + '.txt?v=' + rando;
         let leveltext = await $.get(filename) as string;
         
         console.log(filename + ' - LOADED');

@@ -384,7 +384,8 @@ define(["require", "exports"], function (require, exports) {
         }
         loadFile(level) {
             return __awaiter(this, void 0, void 0, function* () {
-                let filename = 'Levels/level' + level + '.txt';
+                var rando = Math.floor(Math.random() * Math.floor(100000));
+                let filename = 'Levels/level' + level + '.txt?v=' + rando;
                 let leveltext = yield $.get(filename);
                 console.log(filename + ' - LOADED');
                 this.tempgrid = [];
